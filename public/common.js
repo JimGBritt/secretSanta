@@ -48,3 +48,25 @@ export function confetti() {
     setTimeout(() => c.remove(), 4800);
   }
 }
+
+/**
+ * Safely render the simple note format into `el` (never uses innerHTML):
+ *   **bold**   *italic*   __underline__   lines starting with "- " become bullets.
+ */
+export function renderRich(el, text) {
+  el.textContent = '';
+  const re = /(\*\*[^*\n]+\*\*|__[^_\n]+__|\*[^*\n]+\*)/g;
+  String(text || '').split('\n').forEach((line, i) => {
+    if (i) el.appendChild(document.createElement('br'));
+    if (/^- /.test(line)) { line = '\u2022 ' + line.slice(2); }
+    for (const part of line.split(re)) {
+      if (!part) continue;
+      let tag = null, inner = part;
+      if (/^\*\*[^*\n]+\*\*$/.test(part)) { tag = 'strong'; inner = part.slice(2, -2); }
+      else if (/^__[^_\n]+__$/.test(part)) { tag = 'u'; inner = part.slice(2, -2); }
+      else if (/^\*[^*\n]+\*$/.test(part)) { tag = 'em'; inner = part.slice(1, -1); }
+      if (tag) { const n = document.createElement(tag); n.textContent = inner; el.appendChild(n); }
+      else el.appendChild(document.createTextNode(part));
+    }
+  });
+}

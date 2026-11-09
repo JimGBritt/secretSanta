@@ -112,3 +112,14 @@ textarea{min-height:200px;resize:vertical}
 .sep{border:0;border-top:1px solid rgba(255,255,255,.12);margin:26px 0}
 textarea.short{min-height:160px}
 .info .note{white-space:pre-line}
+.toolbar{display:flex;gap:8px;margin-bottom:8px}
+.tb{font:inherit;font-size:16px;color:#fff;cursor:pointer;min-width:44px;min-height:40px;padding:6px 12px;
+  border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08)}
+.tb:hover,.tb:focus-visible{background:#fff;color:#000;outline:none}
+.hint.left{text-align:left;margin-top:12px}
+.info.preview{text-align:left;min-height:48px;white-space:pre-line}
+.theater[role=button]{cursor:pointer}
+.theater.open[role=button]{cursor:default}
+.theater:focus-visible{outline:3px solid var(--purple-lt);outline-offset:3px}
+.theater:not(.open):hover .curtain.l{transform:scaleX(.93)}
+.theater:not(.open):hover .curtain.r{transform:scaleX(.93)}

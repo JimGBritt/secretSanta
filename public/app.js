@@ -1,7 +1,9 @@
-import { api, formatDate, sparkles, confetti } from './common.js';
+import { api, formatDate, sparkles, confetti, renderRich } from './common.js';
 
 const $ = (s) => document.querySelector(s);
 let current = null;
+let busy = false;
+let revealed = false;
 
 function showInfo(giftDate, giftNote) {
   const box = $('#info');
@@ -11,7 +13,7 @@ function showInfo(giftDate, giftNote) {
   if (!parts.length) { box.hidden = true; return; }
   box.innerHTML = parts.join('<br>');
   if (giftDate) box.querySelector('b').textContent = formatDate(giftDate);
-  if (giftNote) box.querySelector('.note').textContent = giftNote;
+  if (giftNote) renderRich(box.querySelector('.note'), giftNote);
   box.hidden = false;
 }
 
@@ -43,6 +45,8 @@ function renderNames(s) {
 
 function openStage(name) {
   current = name;
+  busy = false;
+  revealed = false;
   $('#me').textContent = name;
   $('#theater').classList.remove('open');
   $('#r-small').textContent = '';
@@ -60,6 +64,8 @@ function openStage(name) {
 }
 
 async function pull() {
+  if (busy || revealed) return;
+  busy = true;
   $('#pull').disabled = true;
   $('#stage-msg').textContent = '';
   try {
@@ -68,8 +74,10 @@ async function pull() {
       $('#r-msg').textContent = '🎄 The names haven\'t been drawn yet. Come back soon!';
       $('#theater').classList.add('open');
       $('#pull').disabled = false;
+      busy = false;
       return;
     }
+    revealed = true;
     $('#r-small').textContent = 'You are the Secret Santa for…';
     $('#r-name').textContent = r.giftee;
     $('#theater').classList.add('open');
@@ -79,6 +87,7 @@ async function pull() {
   } catch (e) {
     $('#stage-msg').textContent = e.message;
     $('#pull').disabled = false;
+    busy = false;
   }
 }
 
@@ -94,6 +103,11 @@ function back() {
 async function init() {
   sparkles();
   $('#pull').addEventListener('click', pull);
+  const theater = $('#theater');
+  theater.addEventListener('click', pull);
+  theater.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pull(); }
+  });
   $('#back').addEventListener('click', back);
   try {
     const s = await api('state');

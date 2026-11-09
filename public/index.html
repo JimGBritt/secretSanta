@@ -36,7 +36,7 @@
   <section id="stage" class="card" aria-live="polite" hidden>
     <p class="who">Hi <b id="me"></b>! 💜</p>
     <div class="stage-wrap">
-      <div class="theater" id="theater">
+      <div class="theater" id="theater" role="button" tabindex="0" aria-label="Pull the curtain to reveal your Secret Santa match">
         <div class="reveal">
           <small id="r-small"></small>
           <strong id="r-name"></strong>
@@ -45,7 +45,7 @@
         <div class="curtain l"></div><div class="curtain r"></div>
       </div>
     </div>
-    <p class="shh" id="shh">🤫 Shhh… it's a secret! Keep it to yourself.</p>
+    <p class="shh" id="shh">🤫 Shhh… it's a secret! Tap the curtain to open it.</p>
     <div id="info" class="info" hidden></div>
     <p id="stage-msg" class="msg-err" role="status"></p>
     <div class="row">

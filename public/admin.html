@@ -36,8 +36,16 @@
 
     <label for="date">Gift exchange date</label>
     <input id="date" type="date">
-    <label for="note">Note shown on the reveal (optional, press Enter for new lines)</label>
+    <label for="note">Note shown on the reveal (optional)</label>
+    <div class="toolbar" role="toolbar" aria-label="Text formatting">
+      <button type="button" class="tb" data-fmt="bold" title="Bold"><b>B</b></button>
+      <button type="button" class="tb" data-fmt="italic" title="Italic"><i>I</i></button>
+      <button type="button" class="tb" data-fmt="underline" title="Underline"><u>U</u></button>
+      <button type="button" class="tb" data-fmt="bullet" title="Bulleted list">• List</button>
+    </div>
     <textarea id="note" class="short" maxlength="2000" placeholder="e.g. Bring your wrapped gift to the studio!&#10;Budget: $15&#10;Wrap it so no one can peek!"></textarea>
+    <p class="hint left">Preview</p>
+    <div id="note-preview" class="info preview"></div>
 
     <div class="row"><button id="save" class="btn" type="button">Save changes</button></div>
     <hr class="sep">
