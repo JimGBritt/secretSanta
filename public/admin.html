@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Secret Santa Admin · Glass House Dance</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎬%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="sparkles" aria-hidden="true"></div>
+<header class="wrap">
+  <p class="eyebrow">Glass House Dance</p>
+  <h1>Director's <em>booth 🎬</em></h1>
+</header>
+<main class="wrap">
+  <section id="login" class="card">
+    <h2>Admin key</h2>
+    <label for="key">Enter the admin key</label>
+    <input id="key" type="password" autocomplete="current-password">
+    <div class="row"><button id="go" class="btn" type="button">Open the booth</button></div>
+    <p id="login-msg" class="msg-err" role="status"></p>
+  </section>
+
+  <section id="panel" class="card" hidden>
+    <h2>Dancers &amp; details</h2>
+    <p class="hint">Status: <span id="status-pill" class="pill"></span></p>
+
+    <label for="names">Names (one per line)</label>
+    <textarea id="names" spellcheck="false" placeholder="Ava&#10;Mia&#10;Zoe"></textarea>
+    <p class="hint" id="count"></p>
+
+    <label for="date">Gift exchange date</label>
+    <input id="date" type="date">
+    <label for="note">Note shown on the reveal (optional)</label>
+    <input id="note" type="text" maxlength="200" placeholder="e.g. Bring your wrapped gift to the studio!">
+
+    <div class="row"><button id="save" class="btn" type="button">Save changes</button></div>
+    <hr class="sep">
+    <h2>The draw</h2>
+    <p class="hint">One tap shuffles everyone into a circle. Nobody gets themselves, and everyone gives and gets exactly one gift.</p>
+    <div class="row">
+      <button id="draw" class="btn" type="button">🎩 Draw the names</button>
+      <button id="reset" class="btn danger" type="button">Reset the draw</button>
+    </div>
+    <p id="msg" class="status" role="status"></p>
+    <p class="hint">Share this link with parents: <b id="link"></b></p>
+  </section>
+</main>
+<footer><a href="/">← Back to the stage</a></footer>
+<script type="module" src="/admin.js"></script>
+</body>
+</html>

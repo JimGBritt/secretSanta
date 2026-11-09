@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Secret Santa · Glass House Dance</title>
+<meta name="description" content="The Glass House Dance Secret Santa — find your name and open the curtain!">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🩰%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="sparkles" aria-hidden="true"></div>
+
+<header class="wrap">
+  <p class="eyebrow">Glass House Dance</p>
+  <h1>Secret Santa <em>on the stage <span class="slipper" aria-hidden="true">🩰</span></em></h1>
+  <p class="lede">Who will you be dancing a surprise to this year? Find your name, then pull the curtain!</p>
+</header>
+
+<main class="wrap">
+  <div id="banner" class="banner" hidden></div>
+
+  <!-- Step 1: pick your name -->
+  <section id="pick" class="card" aria-labelledby="pick-h">
+    <h2 id="pick-h">Which dancer are you?</h2>
+    <p class="hint">Grown-ups: tap your dancer's name, then let her pull the curtain herself!</p>
+    <div id="names" class="names" role="group" aria-label="Dancer names"></div>
+    <p id="pick-msg" class="msg-err" role="status"></p>
+  </section>
+
+  <!-- Step 2: the curtain -->
+  <section id="stage" class="card" aria-live="polite" hidden>
+    <p class="who">Hi <b id="me"></b>! 💜</p>
+    <div class="stage-wrap">
+      <div class="theater" id="theater">
+        <div class="reveal">
+          <small id="r-small"></small>
+          <strong id="r-name"></strong>
+          <span class="msg" id="r-msg"></span>
+        </div>
+        <div class="curtain l"></div><div class="curtain r"></div>
+      </div>
+    </div>
+    <p class="shh" id="shh">🤫 Shhh… it's a secret! Keep it to yourself.</p>
+    <div id="info" class="info" hidden></div>
+    <p id="stage-msg" class="msg-err" role="status"></p>
+    <div class="row">
+      <button id="pull" class="btn" type="button">Pull the curtain ✨</button>
+      <button id="back" class="btn ghost" type="button">Back to all dancers</button>
+    </div>
+  </section>
+</main>
+
+<footer>Made with 💜 for the dancers of <a href="https://www.glasshousedance.com" target="_blank" rel="noopener">Glass House Dance</a></footer>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
