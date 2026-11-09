@@ -1,6 +1,6 @@
-# Glass House Dance — Secret Santa 🩰
+# Team Pitch Secret Santa 🩰
 
-A whimsical, dance-themed Secret Santa site for the girls of [Glass House Dance](https://www.glasshousedance.com).
+A whimsical, dance-themed Secret Santa site for Team Pitch at [Glass House Dance](https://www.glasshousedance.com).
 Parents open a link, tap their dancer's name, and the dancer pulls the curtain to reveal who she's shopping for.
 
 - **Site:** static HTML/CSS/JS in `public/`, served by a tiny dependency-free Node server (`server.js`) on Azure App Service (Linux, free F1 tier)
