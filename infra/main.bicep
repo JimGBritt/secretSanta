@@ -1,5 +1,8 @@
-// Glass House Dance Secret Santa: Static Web App (site + managed API) and a Storage account (Table).
+// Glass House Dance Secret Santa: App Service (Linux, Node) + Storage account (Table).
 param location string = 'westus2'
+// Free (F1) App Service quota is 0 in westus2 on this subscription; westus3 works.
+param appLocation string = 'westus3'
+param siteName string = 'team-pitch-secret-santa'
 @secure()
 param adminKey string
 
@@ -17,21 +20,32 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
 }
 
-resource site 'Microsoft.Web/staticSites@2023-12-01' = {
-  name: 'swa-glasshouse-santa-${take(suffix, 6)}'
-  location: location
-  sku: { name: 'Free', tier: 'Free' }
-  properties: {}
+resource plan 'Microsoft.Web/serverfarms@2023-12-01' = {
+  name: 'plan-${siteName}'
+  location: appLocation
+  kind: 'linux'
+  sku: { name: 'F1', tier: 'Free' }
+  properties: { reserved: true }
 }
 
-resource settings 'Microsoft.Web/staticSites/config@2023-12-01' = {
-  parent: site
-  name: 'appsettings'
+resource site 'Microsoft.Web/sites@2023-12-01' = {
+  name: siteName
+  location: appLocation
   properties: {
-    STORAGE_CONNECTION: 'DefaultEndpointsProtocol=https;AccountName=${storage.name};AccountKey=${storage.listKeys().keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
-    ADMIN_KEY: adminKey
+    serverFarmId: plan.id
+    httpsOnly: true
+    siteConfig: {
+      linuxFxVersion: 'NODE|22-lts'
+      appCommandLine: 'node server.js'
+      minTlsVersion: '1.2'
+      ftpsState: 'Disabled'
+      appSettings: [
+        { name: 'STORAGE_CONNECTION', value: 'DefaultEndpointsProtocol=https;AccountName=${storage.name};AccountKey=${storage.listKeys().keys[0].value};EndpointSuffix=${environment().suffixes.storage}' }
+        { name: 'ADMIN_KEY', value: adminKey }
+        { name: 'SCM_DO_BUILD_DURING_DEPLOYMENT', value: 'true' }
+      ]
+    }
   }
 }
 
-output siteName string = site.name
-output siteUrl string = 'https://${site.properties.defaultHostname}'
+output siteUrl string = 'https://${site.properties.defaultHostName}'

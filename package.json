@@ -1,0 +1,9 @@
+{
+  "name": "glasshouse-secret-santa",
+  "version": "2.0.0",
+  "private": true,
+  "main": "server.js",
+  "engines": { "node": ">=22" },
+  "scripts": { "start": "node server.js", "test": "node --test test/*.test.js" },
+  "dependencies": { "@azure/data-tables": "^13.3.0" }
+}

@@ -34,7 +34,7 @@ function makeHandlers(store, adminKey) {
     async admin(action, body) {
       if (!keyMatches(body && body.key, adminKey)) {
         await new Promise((r) => setTimeout(r, 400)); // slow down guessing
-        return fail(401, 'That admin key is not right.');
+        return fail(401, 'That password is not right.');
       }
       const s = await store.load();
 
