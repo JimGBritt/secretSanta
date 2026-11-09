@@ -56,3 +56,9 @@ test('handlers: refuses all admin access if no key configured', async () => {
   const h = makeHandlers(new MemoryStore(), undefined);
   assert.strictEqual((await h.admin('check', { key: '' })).status, 401);
 });
+
+test('gift note keeps line breaks and is trimmed', async () => {
+  const h = makeHandlers(new MemoryStore(), 'k');
+  const r = await h.admin('save', { key: 'k', names: ['A', 'B'], giftNote: '  Line one\r\nLine two\n\nLine three  ' });
+  assert.strictEqual(r.jsonBody.giftNote, 'Line one\nLine two\n\nLine three');
+});

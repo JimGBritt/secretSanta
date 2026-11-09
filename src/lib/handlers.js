@@ -50,7 +50,7 @@ function makeHandlers(store, adminKey) {
           }
           s.names = names;
           s.giftDate = String(body.giftDate || '').slice(0, 10);
-          s.giftNote = String(body.giftNote || '').slice(0, 200);
+          s.giftNote = String(body.giftNote || '').replace(/\r\n?/g, '\n').trim().slice(0, 500);
           await store.save(s);
           return ok(publicView(s));
         }

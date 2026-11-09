@@ -110,3 +110,5 @@ textarea{min-height:200px;resize:vertical}
   .curtain{transition:none}.name-btn{transition:none}
 }
 .sep{border:0;border-top:1px solid rgba(255,255,255,.12);margin:26px 0}
+textarea.short{min-height:110px}
+.info .note{white-space:pre-line}
