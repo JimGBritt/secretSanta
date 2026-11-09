@@ -123,3 +123,4 @@ textarea.short{min-height:160px}
 .theater:focus-visible{outline:3px solid var(--purple-lt);outline-offset:3px}
 .theater:not(.open):hover .curtain.l{transform:scaleX(.93)}
 .theater:not(.open):hover .curtain.r{transform:scaleX(.93)}
+.banner b,.info b{display:inline-block;white-space:nowrap}

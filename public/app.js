@@ -8,7 +8,7 @@ let revealed = false;
 function showInfo(giftDate, giftNote) {
   const box = $('#info');
   const parts = [];
-  if (giftDate) parts.push(`🎁 Gift exchange: <b></b>`);
+  if (giftDate) parts.push(`🎁 Gift exchange<br><b></b>`);
   if (giftNote) parts.push(`<span class="note"></span>`);
   if (!parts.length) { box.hidden = true; return; }
   box.innerHTML = parts.join('<br>');
@@ -21,7 +21,7 @@ function showBanner(s) {
   const b = $('#banner');
   if (s.giftDate) {
     b.hidden = false;
-    b.innerHTML = '🎁 Gift exchange: <b></b>';
+    b.innerHTML = '🎁 Gift exchange<br><b></b>';
     b.querySelector('b').textContent = formatDate(s.giftDate);
   } else b.hidden = true;
 }
