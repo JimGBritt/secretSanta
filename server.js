@@ -10,7 +10,7 @@ const { TableStore, MemoryStore } = require('./src/lib/store');
 const store = process.env.STORAGE_CONNECTION ? new TableStore(process.env.STORAGE_CONNECTION) : new MemoryStore();
 const h = makeHandlers(store, process.env.ADMIN_KEY);
 const pub = path.join(__dirname, 'public');
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.txt': 'text/plain; charset=utf-8' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.mp3': 'audio/mpeg', '.md': 'text/plain; charset=utf-8' };
 
 const SECURITY = {
   'X-Content-Type-Options': 'nosniff',
@@ -46,7 +46,19 @@ const server = http.createServer(async (req, res) => {
     if (!file.startsWith(pub + path.sep) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
       res.writeHead(404, SECURITY); return res.end('Not found');
     }
-    res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-cache', ...SECURITY });
+    const size = fs.statSync(file).size;
+    const base = { 'Content-Type': types[path.extname(file)] || 'application/octet-stream', 'Accept-Ranges': 'bytes', 'Cache-Control': path.extname(file) === '.mp3' ? 'public, max-age=86400' : 'no-cache', ...SECURITY };
+    const m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || '');
+    if (m && (m[1] || m[2])) {   // byte ranges: Safari/iOS need them to play audio
+      let start = m[1] ? parseInt(m[1], 10) : size - parseInt(m[2], 10);
+      let end = m[1] && m[2] ? Math.min(parseInt(m[2], 10), size - 1) : size - 1;
+      if (start < 0) start = 0;
+      if (start > end || start >= size) { res.writeHead(416, { 'Content-Range': `bytes */${size}`, ...SECURITY }); return res.end(); }
+      res.writeHead(206, { ...base, 'Content-Range': `bytes ${start}-${end}/${size}`, 'Content-Length': end - start + 1 });
+      return fs.createReadStream(file, { start, end }).pipe(res);
+    }
+    res.writeHead(200, { ...base, 'Content-Length': size });
+    if (req.method === 'HEAD') return res.end();
     fs.createReadStream(file).pipe(res);
   } catch (e) {
     console.error(e);

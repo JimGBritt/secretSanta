@@ -124,3 +124,8 @@ textarea.short{min-height:160px}
 .theater:not(.open):hover .curtain.l{transform:scaleX(.93)}
 .theater:not(.open):hover .curtain.r{transform:scaleX(.93)}
 .banner b,.info b{display:inline-block;white-space:nowrap}
+.music{position:fixed;right:16px;bottom:16px;z-index:60;width:52px;height:52px;border-radius:50%;
+  font-size:24px;line-height:1;cursor:pointer;color:#fff;border:1.5px solid rgba(206,117,250,.7);
+  background:rgba(60,15,90,.85);box-shadow:0 0 22px rgba(153,51,204,.55);transition:transform .15s}
+.music:hover,.music:focus-visible{transform:scale(1.1);outline:2px solid var(--purple-lt);outline-offset:2px}
+footer small{display:block;margin-top:10px;font-size:12px;opacity:.8}
